@@ -12,7 +12,7 @@ Envrionment for working with Azure VCFs
 
 1. Create a resource group
 
-1. Assign the application to the _Contributor_ or _Reader_ role on the resource group
+1. Assign the application to the _Contributor_ or _Reader_ role on the resource group (Request permission if you are not authorized to assign roles on the resource group)
 
 1. In `.vscode/launch.json` fill in the `AWS_CLIENT_ID` and `AWS_CLIENT_SECRET` for the VCF user. Be sure to escape the JSON. Avoid using online tools to do this due to the sensitive nature of what you are escaping. The resulting `env` map will resemble:
     ```json
