@@ -1,4 +1,4 @@
-$BITBUCKET_USER="adilislam"
+$BITBUCKET_USER="YOUR_BITBUCKET_USER"
 $VCF_BITBUCKET_CLONE_URL="https://$BITBUCKET_USER@bitbucket.org/cloudacademy/labs-vcf-boilerplates.git"
 $VCF_BITBUCKET_PATH=".."
 $VCF_BITBUCKET_DIR="$VCF_BITBUCKET_PATH/labs-vcf-boilerplates"
