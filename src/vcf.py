@@ -5,32 +5,31 @@ from config import EVENT_CONFIG
 
 ## Beginning of VCF block
 
-from azure.common.credentials import ServicePrincipalCredentials
+from azure.identity import ClientSecretCredential
 from azure.mgmt.network import NetworkManagementClient
 
-LAB_STEP_VAR = 'Num_vpn_gateway_connections'
-DEFAULT_VALUE = '2'
+LAB_STEP_VAR = 'Num_private_endpoints'
+DEFAULT_VALUE = '1'
 
 def handler(event, context):
     step_variables = event.get('step_variables',{})
     lab_step_variable = step_variables.get(LAB_STEP_VAR) or DEFAULT_VALUE
-    num_vpn_gateway_connections = int(lab_step_variable)
+    num_private_endpoints = int(lab_step_variable)
 
     credentials, subscription_id = get_credentials(event)
     resource_group = event['environment_params']['resource_group']
     
     client = NetworkManagementClient(credentials, subscription_id)
-    result = client.virtual_network_gateway_connections.list(resource_group)
-    vpn_gateway_connections = [connection for connection in result if connection.connection_type == 'Vnet2Vnet']
-    return len(vpn_gateway_connections) >= num_vpn_gateway_connections
+    private_endpoints = list(client.private_endpoints.list(resource_group))
+    return len(private_endpoints) >= num_private_endpoints
 
 
 def get_credentials(event):
     subscription_id = event['environment_params']['subscription_id']
-    credentials = ServicePrincipalCredentials(
+    credentials = ClientSecretCredential(
         client_id=event['credentials']['credential_id'],
-        secret=event['credentials']['credential_key'],
-        tenant=event['environment_params']['tenant']
+        client_secret=event['credentials']['credential_key'],
+        tenant_id=event['environment_params']['tenant']
     )
     return credentials, subscription_id
 

@@ -6,7 +6,7 @@ VCF_BITBUCKET_CLONE_URL=https://$BITBUCKET_USER@bitbucket.org/cloudacademy/labs-
 VCF_BITBUCKET_PATH=..
 VCF_BITBUCKET_DIR=$VCF_BITBUCKET_PATH/labs-vcf-boilerplates
 CLOUD=azure # valid values=aws|azure|gcp
-REQUIREMENTS=$VCF_BITBUCKET_DIR/python3.6/$CLOUD.requirements.txt
+REQUIREMENTS=$VCF_BITBUCKET_DIR/deploy/lambdas/python3.8-$CLOUD/requirements.txt
 
 if [ ! -d "$VCF_BITBUCKET_DIR" ] ; then
     git config credential.helper store # store bitbucket credential on disk
@@ -19,7 +19,22 @@ cp $REQUIREMENTS requirements.txt
 
 rm -rf venv # clean start
 
-python3.7 -m venv venv
+python3.8 -m venv venv
 source ./venv/bin/activate
 pip install pylint autopep8 # dev dependencies
 pip install -r requirements.txt # prod dependencies
+
+# Trim Azure mgmt packages included api versions
+keep_api_versions=1
+mgmt_client_dir=python/azure/mgmt
+for client_dir in $mgmt_client_dir/*; do
+    old_IFS=$IFS; IFS=$'\n'
+    api_dirs=($(find $client_dir -maxdepth 1 -type d -regex "$client_dir/v[0-9][0-9][0-9][0-9].*" | sort))
+    unset IFS; IFS=$old_IFS
+    if [[ ${#api_dirs[@]} -le $keep_api_versions ]]; then
+        continue
+    fi
+    for i in $(seq 0 1 $(( ${#api_dirs[@]} - $(( $keep_api_versions + 1 )) )) ); do
+        rm -rf ${api_dirs[i]}
+    done
+done
