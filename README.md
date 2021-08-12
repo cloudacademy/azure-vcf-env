@@ -1,12 +1,12 @@
 # azure-vcf-env
 
-Envrionment for working with Azure VCFs
+Environment for working with Azure VCFs
 
 ## Getting started
 
-1. Ensure Python 3.6+ is installed on your system
+1. Ensure Python 3.8+ is installed on your system
 
-1. Create a Azure Active Directory application (or request on be created)
+1. Create an Azure Active Directory application (or request on be created)
 
 1. Create a secret for the application
 
