@@ -43,6 +43,35 @@ Environment for working with Azure VCFs
 
 1. Run `init.sh` (Mac/Linux)/`init.ps1` (Windows) to set up the virtual environment again. (only the `venv/` directory is impacted by this operation)
 
+## Adding Dependencies
+
+1. Add the package including version to the `requirements.txt` file
+
+1. Run the following to remove the existing virtual environment and install only the production dependencies in a clean environment:
+
+    ```sh
+    rm -rf venv # clean start
+    python3.8 -m venv venv
+    source ./venv/bin/activate
+    pip install -r requirements.txt # prod dependencies
+    ```
+
+1. Freeze the prod dependencies into `requirements.txt`:
+
+    ```sh
+    pip freeze > requirements.txt
+    ```
+
+1. Add in the dev dependencies
+
+    ```sh
+    pip install pylint autopep8 # dev dependencies
+    ```
+
+1. Run the code below the `# Trim Azure mgmt packages included api versions` comment in `init.sh` to trim the API versions of the Azure management clients to reduce the disk space (lambda layers have only ~256MB available).
+
+1. Test your check functions are working after trimming and create a pull request on bitbucket labs-vcf-boilerplates with the new `requirements.txt`
+
 ## References
 
 - [Azure SDK for Python](https://github.com/Azure/azure-sdk-for-python/tree/master/sdk) (Unit test code in particular)
