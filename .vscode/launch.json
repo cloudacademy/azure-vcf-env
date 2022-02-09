@@ -11,11 +11,11 @@
             "program": "${file}",
             "console": "integratedTerminal",
             "env": {
-                "AZURE_SUBSCRIPTION_ID": "INSERT_AZURE_SUBSCRIPTION_ID",
-                "AZURE_CLIENT_ID": "INSERT_AZURE_CLIENT_ID",
-                "AZURE_CLIENT_SECRET": "INSERT_AZURE_CLIENT_SECRET",
-                "AZURE_TENANT_ID": "INSERT_AZURE_TENANT_ID",
-                "AZURE_RESOURCE_GROUP": "INSERT_AZURE_RESOURCE_GROUP"
+                "AZURE_SUBSCRIPTION_ID": "c4fd644c-22da-4e2e-8c6c-86dfa6a28964",
+                "AZURE_CLIENT_ID": "1923afe4-b16c-4022-a656-9639c444a1e0",
+                "AZURE_CLIENT_SECRET": "6BJyY-LJ1vNvb_eLAQ.-F5AlrEU~_KWU73",
+                "AZURE_TENANT_ID": "fd1fbf9f-991a-40b4-ae26-61dfc34421ef",
+                "AZURE_RESOURCE_GROUP": "cal-569-74"
             }
         }
     ]
