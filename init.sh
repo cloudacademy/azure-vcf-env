@@ -28,7 +28,7 @@ pip install -r requirements.txt # prod dependencies
 # Trim Azure mgmt packages included api versions
 keep_api_versions=1
 mgmt_client_dir=venv/lib/python*/site-packages/azure/mgmt
-skip_clients=( "eventhub", "monitor") # skip clients requiring more than latest version of the API
+skip_clients=( "eventhub", "monitor", "keyvault") # skip clients requiring more than latest version of the API
 for client_dir in $mgmt_client_dir/*; do
     if [[ " ${skip_clients[*]} " =~ " $(basename ${client_dir}) " ]]; then
         continue
