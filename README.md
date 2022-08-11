@@ -51,7 +51,7 @@ Environment for working with Azure VCFs
 
     ```sh
     rm -rf venv # clean start
-    python3.8 -m venv venv
+    python3 -m venv venv
     source ./venv/bin/activate
     pip install -r requirements.txt # prod dependencies
     ```
