@@ -25,8 +25,8 @@ RUN bash prune_azure_mgmt_libs.sh
 
 WORKDIR /app
 COPY . /app
-# move config.env to .env if .config.env exists
-RUN test -f .config.env && mv .config.env .env
+# move config.env to .env if .config.env exists but continue if it doesn't
+RUN test -f .config.env && mv .config.env .env || true
 
 # Creates a non-root user with an explicit UID and adds permission to access the /app folder
 # For more info, please refer to https://aka.ms/vscode-docker-python-configure-containers
