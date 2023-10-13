@@ -17,6 +17,21 @@
                 "AZURE_TENANT_ID": "INSERT_AZURE_TENANT_ID",
                 "AZURE_RESOURCE_GROUP": "INSERT_AZURE_RESOURCE_GROUP"
             }
+        },
+        {
+            "name": "Docker: Python - General",
+            "type": "docker",
+            "request": "launch",
+            "preLaunchTask": "docker-run: debug",
+            "python": {
+                "pathMappings": [
+                    {
+                        "localRoot": "${workspaceFolder}",
+                        "remoteRoot": "/app"
+                    }
+                ],
+                "projectType": "general"
+            }
         }
     ]
 }
