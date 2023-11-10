@@ -8,21 +8,26 @@ from pkg_resources import resource_stream
 from config import EVENT_CONFIG
 
 # Beginning of VCF block
+
 from azure.identity import ClientSecretCredential
-from azure.mgmt.appcontainers import ContainerAppsAPIClient
+from azure.mgmt.resource import ResourceManagementClient
+
+def with_hint(result, hint=None):
+    return {'result': result, 'hint_message': hint} if hint else result
 
 def handler(event, context):
     credentials, subscription_id = get_credentials(event)
-    resource_group = event['environment_params']['resource_group']
-    resource_client = ContainerAppsAPIClient(credentials, subscription_id)
+    resource_group = event['environment_params']['resource_group']    
+    resource_client = ResourceManagementClient(credentials, subscription_id)
 
     try:
-        resources = list(resource_client.container_apps.list_by_resource_group(resource_group))
-        ingress_set = resources[0].configuration.ingress.target_port == 8000
-        reg_config = resources[0].configuration.registries
-        return ingress_set and len(reg_config) > 0
+        bot_resource = list(resource_client.resources.list_by_resource_group(resource_group, filter="resourceType eq 'Microsoft.BotService/botServices'"))
+        if bot_resource:
+            return with_hint(True, 'Found bot resource.')
+        else:
+            return with_hint(False, 'Could not find any bot resource.')
     except:
-        return False
+        return with_hint(False, 'Could not find relevant resource.')
 
 def get_credentials(event):
     subscription_id = event['environment_params']['subscription_id']
