@@ -1,6 +1,6 @@
 import time
 
-from config import EVENT_CONFIG
+from config import CONFIG
 
 # Beginning of VCF block
 from azure.identity import ClientSecretCredential
@@ -55,5 +55,5 @@ def timed_handler(event, context):
 
 
 if __name__ == "__main__":
-    result = timed_handler(EVENT_CONFIG, None)
+    result = timed_handler(CONFIG, None)
     print(result)

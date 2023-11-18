@@ -2,7 +2,7 @@ from dotenv import load_dotenv
 load_dotenv() 
 
 import time
-from config import EVENT_CONFIG
+from config import CONFIG
 from vcf import handler
 
 
@@ -14,7 +14,7 @@ def timed_handler(event, context):
     return result
 
 def entry():
-    result = timed_handler(EVENT_CONFIG, None)
+    result = timed_handler(CONFIG, None)
     print(result)
 
 if __name__ == "__main__":
