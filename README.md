@@ -84,6 +84,8 @@ The Azure CLI credentials are used by the Azure SDK for Python to authenticate w
 The Azure CLI authenticated user (`az login`) and default subscription (`az account set --subscription ...`) are used by the Azure SDK for Python.
 The default resource group must also be configured (`az config set defaults.group=...`), or the resource group (`AZURE_RESOURCE_GROUP`) may be defined in isolation in a .config.env file.
 
+If the Azure CLI is authenticated, a default subscription is set and displayed by `az account show`, and a default resource group is set and displayed by `az config get defaults.group`, a .config.env file can be omitted.
+
 ### .config.env file
 
 The .config.env file is similar to the environment variables defined in the launch.json file but is a flat file of variable declarations.
