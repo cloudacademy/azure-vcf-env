@@ -18,6 +18,14 @@
 			"dependsOn": [
 				"docker-build"
 			],
+			"dockerRun": {
+				"volumes": [
+					{
+						"localPath": "${userHome}/.azure",
+						"containerPath": "/home/appuser/.azure"
+					}
+				],
+			},
 			"python": {
 				"file": "src/entry.py"
 			}

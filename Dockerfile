@@ -14,6 +14,18 @@ RUN apt-get install debian-archive-keyring && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+# Install Azure CLI for Azure CLI Credentials
+ARG AZ_CLI_VERSION=2.53.1
+ARG AZ_DIST=bookworm
+RUN mkdir -p /etc/apt/keyrings && \
+    curl -sLS https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | tee /etc/apt/keyrings/microsoft.gpg > /dev/null && \
+    chmod go+r /etc/apt/keyrings/microsoft.gpg && \
+    echo "deb [arch=`dpkg --print-architecture` signed-by=/etc/apt/keyrings/microsoft.gpg] https://packages.microsoft.com/repos/azure-cli/ $AZ_DIST main" | tee /etc/apt/sources.list.d/azure-cli.list && \
+    apt-get update --allow-insecure-repositories && \
+    apt-get install --allow-unauthenticated -y azure-cli=$AZ_CLI_VERSION-1~$AZ_DIST && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
 # Install dev dependencies
 RUN python -m pip install --upgrade python-dotenv==1.0.0
 
