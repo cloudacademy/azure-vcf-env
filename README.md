@@ -72,6 +72,35 @@ Environment for working with Azure VCFs
 
 1. Test your check functions are working after trimming and create a pull request on bitbucket labs-vcf-boilerplates with the new `requirements.txt`
 
+## Authentication options
+
+The launch.json encoding of client ID and client secret for authentication works well for debugging the current file.
+To streamline the authentication process when debugging using containers (VS Code Docker debug profile), Azure CLI credentials and .config.env files are used.
+<ins>.config.env is higher precedence</ins> and Azure CLI credentials are used as a fallback.
+
+### Azure CLI credentials
+
+The Azure CLI credentials are used by the Azure SDK for Python to authenticate with Azure.
+The Azure CLI authenticated user (`az login`) and default subscription (`az account set --subscription ...`) are used by the Azure SDK for Python.
+The default resource group must also be configured (`az config set defaults.group=...`), or the resource group (`AZURE_RESOURCE_GROUP`) may be defined in isolation in a .config.env file.
+
+### .config.env file
+
+The .config.env file is similar to the environment variables defined in the launch.json file but is a flat file of variable declarations.
+The contents of .config.env resemble:
+    
+```sh
+AZURE_CLIENT_ID=12345678-1234-1234-1234-123456789012
+AZURE_CLIENT_SECRET=AL8)RxYQzCf./dF!y5EN13eqdg3T!qwh
+AZURE_TENANT_ID=1234abcd-1234-1234-1234-1234abcd1234
+AZURE_SUBSCRIPTION_ID=12345678-1234-1234-1234-123456789012
+AZURE_RESOURCE_GROUP=your-resource-group
+```
+
+As mentioned, Azure CLI credentials may be used in lieu of `AZURE_CLIENT_ID`, `AZURE_CLIENT_SECRET`, `AZURE_TENANT_ID`. Refer to [Azure Identity env vars](https://github.com/Azure/azure-sdk-for-python/blob/main/sdk/identity/azure-identity/README.md#environment-variables)
+If the resource group in the Azure CLI is not set using `az config set defaults.group=...` the .config.env file must declare `AZURE_RESOURCE_GROUP`.
+If .config.env does not declare `AZURE_SUBSCRIPTION_ID` the Azure CLI default subscription is used.
+
 ## References
 
 - [Azure SDK for Python](https://github.com/Azure/azure-sdk-for-python/tree/master/sdk) (Unit test code in particular)

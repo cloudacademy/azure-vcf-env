@@ -21,7 +21,7 @@ def handler(event, context):
         ingress_set = resources[0].configuration.ingress.target_port == 8000
         reg_config = resources[0].configuration.registries
         return ingress_set and len(reg_config) > 0
-    except:
+    except Exception as e:
         return False
 
 def get_credentials(event):
