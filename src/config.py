@@ -8,6 +8,6 @@ CONFIG = {
     'environment_params': {
         'subscription_id': os.environ.get('AZURE_SUBSCRIPTION_ID'),
         'tenant'         : os.environ.get('AZURE_TENANT_ID'),
-        'resource_group' : os.environ.get('AZURE_RESOURCE_GROUP', 'my-rg')
+        'resource_group' : os.environ.get('AZURE_RESOURCE_GROUP')
     }
 }
