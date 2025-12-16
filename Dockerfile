@@ -1,5 +1,5 @@
 # For more information, please refer to https://aka.ms/vscode-docker-python
-FROM python:3.9-slim
+FROM python:3.13-slim
 
 # Keeps Python from generating .pyc files in the container
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -15,7 +15,7 @@ RUN apt-get install debian-archive-keyring && \
     rm -rf /var/lib/apt/lists/*
 
 # Install Azure CLI for Azure CLI Credentials
-ARG AZ_CLI_VERSION=2.53.1
+ARG AZ_CLI_VERSION=2.81.0
 ARG AZ_DIST=bookworm
 RUN mkdir -p /etc/apt/keyrings && \
     curl -sLS https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | tee /etc/apt/keyrings/microsoft.gpg > /dev/null && \
@@ -27,7 +27,7 @@ RUN mkdir -p /etc/apt/keyrings && \
     rm -rf /var/lib/apt/lists/*
 
 # Install dev dependencies
-RUN python -m pip install --upgrade python-dotenv==1.0.0
+RUN python -m pip install --upgrade python-dotenv==1.0.0 jmespath==0.10.0
 
 # Install pip requirements
 COPY requirements.txt prune_azure_mgmt_libs.sh /
