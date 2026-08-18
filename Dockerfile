@@ -15,15 +15,16 @@ RUN apt-get install debian-archive-keyring && \
     rm -rf /var/lib/apt/lists/*
 
 # Install Azure CLI for Azure CLI Credentials
-ARG AZ_CLI_VERSION=2.81.0
+ARG AZ_CLI_VERSION=2.85.0
 ARG AZ_DIST=bookworm
-RUN mkdir -p /etc/apt/keyrings && \
-    curl -sLS https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | tee /etc/apt/keyrings/microsoft.gpg > /dev/null && \
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends curl ca-certificates gnupg && \
+    mkdir -p /etc/apt/keyrings && \
+    curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | gpg --batch --yes --dearmor -o /etc/apt/keyrings/microsoft.gpg && \
     chmod go+r /etc/apt/keyrings/microsoft.gpg && \
-    echo "deb [arch=`dpkg --print-architecture` signed-by=/etc/apt/keyrings/microsoft.gpg] https://packages.microsoft.com/repos/azure-cli/ $AZ_DIST main" | tee /etc/apt/sources.list.d/azure-cli.list && \
-    apt-get update --allow-insecure-repositories && \
-    apt-get install --allow-unauthenticated -y azure-cli=$AZ_CLI_VERSION-1~$AZ_DIST && \
-    apt-get clean && \
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/microsoft.gpg] https://packages.microsoft.com/repos/azure-cli/ $AZ_DIST main" > /etc/apt/sources.list.d/azure-cli.list && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends azure-cli=${AZ_CLI_VERSION}-1~${AZ_DIST} && \
     rm -rf /var/lib/apt/lists/*
 
 # Install dev dependencies
